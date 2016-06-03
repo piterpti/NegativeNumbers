@@ -17,10 +17,14 @@ import com.example.ruzik.liczbyujemne.fragments.DifficultLevelFragment;
 import com.example.ruzik.liczbyujemne.fragments.GameFragment;
 import com.example.ruzik.liczbyujemne.fragments.MenuFragment;
 
+import layout.GameEnded;
+
 public class MainActivity extends FragmentActivity {
 
     public static final String DIFFICULT_LEVEL_KEY = "DIFFICULT_LEVEL";
     public static final String GAME_FRAGMENT_TAG = "GAME_FRAGMENT";
+    public static final String GAME_ENDED_TAG = "GAME_ENDED";
+    public static final String MENU_TAG  = "MENU";
 
 
     public static GameStatus gameStatus;
@@ -33,7 +37,7 @@ public class MainActivity extends FragmentActivity {
         MenuFragment menuFragment = new MenuFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if(savedInstanceState == null) {
-            transaction.add(R.id.fragment_container, menuFragment);
+            transaction.add(R.id.fragment_container, menuFragment, MENU_TAG);
             transaction.addToBackStack(null);
             transaction.commit();
             LoadDifficultLevels();
@@ -96,22 +100,28 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
+        MenuFragment menuFragment = null;
+        menuFragment = (MenuFragment) getSupportFragmentManager().findFragmentByTag(MENU_TAG);
+        if(menuFragment != null && menuFragment.isVisible()) {
+            System.exit(0);
+        }
         boolean callSuper = true;
         GameFragment gameFragment = null;
-
+        GameEnded gameEnded = null;
         gameFragment = (GameFragment) getSupportFragmentManager().findFragmentByTag(GAME_FRAGMENT_TAG);
+        gameEnded = (GameEnded) getSupportFragmentManager().findFragmentByTag(GAME_ENDED_TAG);
         if (gameFragment != null && gameFragment.isVisible()) {
             if(gameFragment.EndGameDialogShow()) {
                 callSuper = false;
             }
         }
-        /*if(gameSummaryFragment != null && gameSummaryFragment.isVisible()) {
-            gameSummaryFragment.BackToMenu();
+        if(gameEnded != null && gameEnded.isVisible()) {
+            gameEnded.BackToMenu();
             callSuper = false;
         }
         if(callSuper)
         {
             super.onBackPressed();
-        }*/
+        }
     }
 }

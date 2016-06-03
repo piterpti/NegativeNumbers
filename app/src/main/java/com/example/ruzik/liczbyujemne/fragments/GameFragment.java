@@ -28,7 +28,7 @@ import layout.GameEnded;
 
 public class GameFragment extends Fragment
 {
-
+    private final int TIME_INTERVAL_PROGRESS_BAR = 20; // all times are in miliseconds
     private final int VERDICT_TIME = 1000;
 
     private Button goBackMenuButton;
@@ -99,7 +99,7 @@ public class GameFragment extends Fragment
         TurnOffTimer();
         MenuFragment menuFragment = new MenuFragment();
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, menuFragment);
+        transaction.replace(R.id.fragment_container, menuFragment, MainActivity.MENU_TAG);
         transaction.commit();
     }
 
@@ -146,7 +146,7 @@ public class GameFragment extends Fragment
         }
         currentQuestion = MainActivity.gameStatus.getQuestion(false);
         gameQuestionTextView.setText(currentQuestion.toString());
-        progressTaskTextView.setText(MainActivity.gameStatus.getCurrentQuestionNum() + "/" + MainActivity.gameStatus.getDifficultLevel().getQuestionCount());
+        progressTaskTextView.setText(MainActivity.gameStatus.getCurrentQuestionNum() + "/" + MainActivity.gameStatus.getQuestionCount());
         ANSWERS = currentQuestion.getAnswers();
         ShuffleArray(ANSWERS);
         for(int i = 0; i < answerButtons.length; i++)
@@ -173,7 +173,7 @@ public class GameFragment extends Fragment
         try {
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             transaction.addToBackStack(null);
-            transaction.replace(R.id.fragment_container, gameEnded);
+            transaction.replace(R.id.fragment_container, gameEnded, MainActivity.GAME_ENDED_TAG);
             transaction.commit();
         }
         catch (NullPointerException e) {
@@ -184,7 +184,7 @@ public class GameFragment extends Fragment
     private void CreateTimer(int time) {
         TurnOffTimer();
         progressBar.setProgress(100);
-        answerTimer = new CountDownTimer(time, 1000) {
+        answerTimer = new CountDownTimer(time, TIME_INTERVAL_PROGRESS_BAR) {
             @Override
             public void onTick(long millisUntilFinished) {
                 float ppp = millisUntilFinished / MainActivity.gameStatus.getDifficultLevel().getAnswerTime() / 10;

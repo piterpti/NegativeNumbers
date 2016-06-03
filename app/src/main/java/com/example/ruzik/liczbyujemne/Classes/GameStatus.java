@@ -53,4 +53,24 @@ public class GameStatus {
         else
             return null;
     }
+
+    public int getCorrectAnswers()
+    {
+        if(questions.size() < 1)
+            return -1;
+        int correctAnswers = 0;
+        for(Question q : questions)
+        {
+            if(q.isCorrectAnswer())
+            {
+                correctAnswers++;
+            }
+        }
+        return correctAnswers;
+    }
+
+    public int getQuestionCount()
+    {
+        return difficultLevel.getQuestionCount();
+    }
 }
