@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.DifficultLevelFragment"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#123456">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose difficult level"
+                android:textSize="24sp"
+                android:padding="16dp"
+                android:textColor="@android:color/white"/>
+
+            <com.example.ruzik.liczbyujemne.Classes.NonScrollListView
+                android:id="@+id/difficultLevels"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="2dp"
+                >
+            </com.example.ruzik.liczbyujemne.Classes.NonScrollListView>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
