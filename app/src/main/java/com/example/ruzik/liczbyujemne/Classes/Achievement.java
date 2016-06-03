@@ -16,10 +16,31 @@ public class Achievement {
         this.correctAnswers = correctAnswers;
         this.name = name;
         this.difficultLevel = difficultLevel;
+        locked = true;
     }
 
     @Override
     public String toString() {
         return name;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getCorrectAnswers() {
+        return correctAnswers;
     }
 }

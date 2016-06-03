@@ -9,7 +9,7 @@
     <string name="diffAdapter_questionCount">Question count:</string>
 
     <string-array name="DifficultLevels">
-        <item>1,Very easy,3,40</item>
+        <item>1,Very easy,10,40</item>
         <item>2,Easy,20,30</item>
         <item>3,Medium,30,20</item>
         <item>4,Hard,40,25</item>

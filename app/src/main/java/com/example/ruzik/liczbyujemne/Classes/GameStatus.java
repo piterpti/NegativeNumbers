@@ -3,7 +3,10 @@ package com.example.ruzik.liczbyujemne.Classes;
 /**
  * Created by Piter on 02/06/2016.
  */
+import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.example.ruzik.liczbyujemne.MainActivity;
 
 import java.util.*;
 
@@ -13,11 +16,13 @@ public class GameStatus {
     private DifficultLevel difficultLevel;
     private ArrayList<Question> questions;
     private ArrayList<Achievement> achievements;
+    private ArrayList<Achievement> unlockedAchievementsByGame;
 
     public GameStatus(DifficultLevel level) {
         currentQuestion = -1;
         difficultLevel = level;
         achievements = new ArrayList<>();
+        unlockedAchievementsByGame = new ArrayList<>();
     }
 
 
@@ -91,4 +96,28 @@ public class GameStatus {
         }
     }
 
+    public void CheckAchievements(int correctAnswers)
+    {
+        for(Achievement a : achievements)
+        {
+            if(a.isLocked())
+            {
+                if(correctAnswers >= a.getCorrectAnswers())
+                {
+                    a.setLocked(false);
+                    unlockedAchievementsByGame.add(a);
+                    String toSave = PreferenceManager.getDefaultSharedPreferences(MainActivity.CONTEXT).getString(MainActivity.ACHIEVEMENT_TAG, "");
+                    if(!toSave.contains(String.valueOf(a.getId())))
+                    {
+                        toSave += a.getId() + ",";
+                        PreferenceManager.getDefaultSharedPreferences(MainActivity.CONTEXT).edit().putString(MainActivity.ACHIEVEMENT_TAG, toSave).commit();
+                    }
+                }
+            }
+        }
+    }
+
+    public ArrayList<Achievement> getUnlockedAchievementsByGame() {
+        return unlockedAchievementsByGame;
+    }
 }

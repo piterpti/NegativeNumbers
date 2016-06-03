@@ -27,7 +27,7 @@ import com.example.ruzik.liczbyujemne.R;
 public class GameFragment extends Fragment
 {
     private final int TIME_INTERVAL_PROGRESS_BAR = 20; // all times are in miliseconds
-    private final int VERDICT_TIME = 1000;
+    private final int VERDICT_TIME = 100;
 
     private Button goBackMenuButton;
     private AnswerButton [] answerButtons;
@@ -103,6 +103,7 @@ public class GameFragment extends Fragment
 
     private void Verdict(boolean answer)
     {
+        answer = true;
         TurnOffTimer();
         nextQuestion = true;
         currentQuestion.setCorrectAnswer(answer);
@@ -175,7 +176,7 @@ public class GameFragment extends Fragment
             transaction.commit();
         }
         catch (NullPointerException e) {
-            Log.w("NullPointer", "Controlled null pointer exception: " + e);
+            Log.w("NullPointer", "Controlled exception:  " + e);
         }
     }
 

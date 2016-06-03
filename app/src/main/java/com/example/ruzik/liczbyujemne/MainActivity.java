@@ -2,9 +2,11 @@ package com.example.ruzik.liczbyujemne;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import java.util.*;
 
@@ -25,6 +27,10 @@ public class MainActivity extends FragmentActivity {
     public static final String GAME_FRAGMENT_TAG = "GAME_FRAGMENT";
     public static final String GAME_ENDED_TAG = "GAME_ENDED";
     public static final String MENU_TAG  = "MENU";
+    public static final String ACHIEVEMENT_TAG = "ACHIEVEMENT";
+
+    public static String ACHIEVEMENT;
+    public static Context CONTEXT;
 
 
     public static GameStatus gameStatus;
@@ -44,6 +50,7 @@ public class MainActivity extends FragmentActivity {
             init();
             LoadAchievementsList();
         }
+        CONTEXT = this;
     }
 
     public void ExitApplication(View view) {
@@ -88,6 +95,33 @@ public class MainActivity extends FragmentActivity {
             }
         }
         gameStatus.setAchievements(achievements);
+        GetUnlockedAchievements();
+    }
+
+    private void GetUnlockedAchievements()
+    {
+        ACHIEVEMENT = PreferenceManager.getDefaultSharedPreferences(this).getString(ACHIEVEMENT_TAG, "");
+        Log.d("blabla", "ACH: " + ACHIEVEMENT);
+        String [] unlockedAchievements = ACHIEVEMENT.split(",");
+        for(String a : unlockedAchievements)
+        {
+            if(a.length() > 0)
+            {
+                int id = Integer.parseInt(a);
+                SetAchievementToActive(id);
+            }
+        }
+    }
+
+    private void SetAchievementToActive(int id)
+    {
+        for(Achievement a : gameStatus.getAchievements())
+        {
+            if(a.getId() == id)
+            {
+                a.setLocked(false);
+            }
+        }
     }
 
     private void init() {

@@ -4,12 +4,17 @@ package com.example.ruzik.liczbyujemne.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+import java.util.*;
 
+import com.example.ruzik.liczbyujemne.Classes.Achievement;
+import com.example.ruzik.liczbyujemne.Classes.AchievementAdapter;
 import com.example.ruzik.liczbyujemne.MainActivity;
 import com.example.ruzik.liczbyujemne.R;
 import com.example.ruzik.liczbyujemne.fragments.AboutFragment;
@@ -55,6 +60,16 @@ public class GameEnded extends Fragment {
         float percentAnswers = ((float) correctAnswers / (float) questionCount) * 100f;
         toDisplay += " (" + String.format("%.2f", percentAnswers) + "%)";
         gameSummaryTextView.setText(toDisplay);
+        MainActivity.gameStatus.CheckAchievements(correctAnswers);
+        ArrayList<Achievement> unlockedAchievements = MainActivity.gameStatus.getUnlockedAchievementsByGame();
+        if(unlockedAchievements.size() > 0)
+        {
+            ListView achievementsListView = (ListView) view.findViewById(R.id.end_unlockedAchievementsList);
+            TextView achievementsTextView = (TextView) view.findViewById(R.id.end_achievementsTextView);
+            achievementsListView.setVisibility(View.VISIBLE);
+            achievementsTextView.setVisibility(View.VISIBLE);
+            achievementsListView.setAdapter(new AchievementAdapter(MainActivity.CONTEXT, unlockedAchievements));
+        }
     }
 
     public void BackToMenu()
