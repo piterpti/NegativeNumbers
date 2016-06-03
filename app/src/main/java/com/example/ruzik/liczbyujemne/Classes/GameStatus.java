@@ -12,15 +12,25 @@ public class GameStatus {
     private int currentQuestion = 0;
     private DifficultLevel difficultLevel;
     private ArrayList<Question> questions;
+    private ArrayList<Achievement> achievements;
 
     public GameStatus(DifficultLevel level) {
         currentQuestion = -1;
         difficultLevel = level;
+        achievements = new ArrayList<>();
     }
 
 
     public DifficultLevel getDifficultLevel() {
         return difficultLevel;
+    }
+
+    public ArrayList<Achievement> getAchievements() {
+        return achievements;
+    }
+
+    public void setAchievements(ArrayList<Achievement> achievements) {
+        this.achievements = achievements;
     }
 
     public void setDifficultLevel(DifficultLevel difficultLevel) {
@@ -73,4 +83,12 @@ public class GameStatus {
     {
         return difficultLevel.getQuestionCount();
     }
+
+    public void LogAchievementsList()
+    {
+        for(Achievement a : achievements) {
+            Log.d("blabla", a.toString());
+        }
+    }
+
 }

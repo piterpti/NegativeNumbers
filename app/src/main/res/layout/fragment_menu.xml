@@ -20,7 +20,8 @@
             android:text="@string/menu_achievements"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.2"/>
+            android:layout_weight="0.2"
+            android:onClick="Achievements"/>
         <Button
             android:text="@string/menu_level"
             android:layout_width="match_parent"

@@ -24,8 +24,6 @@ import com.example.ruzik.liczbyujemne.Classes.Question;
 import com.example.ruzik.liczbyujemne.MainActivity;
 import com.example.ruzik.liczbyujemne.R;
 
-import layout.GameEnded;
-
 public class GameFragment extends Fragment
 {
     private final int TIME_INTERVAL_PROGRESS_BAR = 20; // all times are in miliseconds

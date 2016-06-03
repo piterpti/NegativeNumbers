@@ -1,4 +1,4 @@
-package layout;
+package com.example.ruzik.liczbyujemne.fragments;
 
 
 import android.os.Bundle;

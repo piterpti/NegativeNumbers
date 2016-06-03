@@ -4,20 +4,20 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import java.util.*;
 
+import com.example.ruzik.liczbyujemne.Classes.Achievement;
 import com.example.ruzik.liczbyujemne.Classes.DifficultLevel;
 import com.example.ruzik.liczbyujemne.Classes.GameStatus;
-import com.example.ruzik.liczbyujemne.Classes.Question;
 import com.example.ruzik.liczbyujemne.fragments.AboutFragment;
+import com.example.ruzik.liczbyujemne.fragments.AchievementFragment;
 import com.example.ruzik.liczbyujemne.fragments.DifficultLevelFragment;
 import com.example.ruzik.liczbyujemne.fragments.GameFragment;
 import com.example.ruzik.liczbyujemne.fragments.MenuFragment;
 
-import layout.GameEnded;
+import com.example.ruzik.liczbyujemne.fragments.GameEnded;
 
 public class MainActivity extends FragmentActivity {
 
@@ -42,6 +42,7 @@ public class MainActivity extends FragmentActivity {
             transaction.commit();
             LoadDifficultLevels();
             init();
+            LoadAchievementsList();
         }
     }
 
@@ -57,6 +58,8 @@ public class MainActivity extends FragmentActivity {
         transaction.addToBackStack(null);
         transaction.commit();
         gameFragment.CreateGame();
+        LoadAchievementsList();
+        gameStatus.LogAchievementsList();
     }
 
     private void LoadDifficultLevels()
@@ -69,6 +72,22 @@ public class MainActivity extends FragmentActivity {
             difficultLevels[counter] = new DifficultLevel(Integer.valueOf(temp[0]), temp[1], Integer.valueOf(temp[2]), Integer.valueOf(temp[3]));
             counter++;
         }
+    }
+
+    private void LoadAchievementsList()
+    {
+        String [] achievementsList = getResources().getStringArray(R.array.Achievements);
+        ArrayList<Achievement> achievements = new ArrayList<>();
+        for(String ach : achievementsList)
+        {
+            String [] temp = ach.split(",");
+            if(Integer.valueOf(temp[1]) == gameStatus.getDifficultLevel().getId())
+            {
+                Achievement toAdd = new Achievement(Integer.valueOf(temp[0]), Integer.valueOf(temp[1]), temp[2], Integer.valueOf(temp[3]));
+                achievements.add(toAdd);
+            }
+        }
+        gameStatus.setAchievements(achievements);
     }
 
     private void init() {
@@ -96,6 +115,15 @@ public class MainActivity extends FragmentActivity {
         transaction.replace(R.id.fragment_container, aboutFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    public void Achievements(View view) {
+        AchievementFragment achievementFragment = new AchievementFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, achievementFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+        LoadAchievementsList();
     }
 
     @Override
