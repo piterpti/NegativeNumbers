@@ -16,7 +16,7 @@ import android.widget.Button;
 /**
  * Created by Piter on 02/06/2016.
  */
-public class AnswerButton extends Button{
+public class AnswerButton extends Button {
 
     private boolean isCorrect = false;
 
@@ -39,4 +39,5 @@ public class AnswerButton extends Button{
     public void setIsCorrect(boolean isCorrect) {
         this.isCorrect = isCorrect;
     }
+
 }

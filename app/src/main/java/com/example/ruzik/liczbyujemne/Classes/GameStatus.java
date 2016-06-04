@@ -50,10 +50,6 @@ public class GameStatus {
         }
     }
 
-    public void setCurrentQuestion(int currentQuestion) {
-        this.currentQuestion = currentQuestion;
-    }
-
     public int getCurrentQuestionNum() {
         return currentQuestion + 1;
     }

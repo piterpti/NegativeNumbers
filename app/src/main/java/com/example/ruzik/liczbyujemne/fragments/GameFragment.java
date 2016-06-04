@@ -27,7 +27,7 @@ import com.example.ruzik.liczbyujemne.R;
 public class GameFragment extends Fragment
 {
     private final int TIME_INTERVAL_PROGRESS_BAR = 20; // all times are in miliseconds
-    private final int VERDICT_TIME = 100;
+    private final int VERDICT_TIME = 1000;
 
     private Button goBackMenuButton;
     private AnswerButton [] answerButtons;
@@ -103,7 +103,6 @@ public class GameFragment extends Fragment
 
     private void Verdict(boolean answer)
     {
-        answer = true;
         TurnOffTimer();
         nextQuestion = true;
         currentQuestion.setCorrectAnswer(answer);
@@ -225,15 +224,15 @@ public class GameFragment extends Fragment
     {
 
         AlertDialog show = new AlertDialog.Builder(getContext())
-                .setTitle("Tytul")
-                .setMessage("Wiadomosc")
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                .setTitle("Warning")
+                .setMessage("Do you want to exit?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         GameBreak();
                     }
                 })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener()
+                .setNegativeButton("No", new DialogInterface.OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

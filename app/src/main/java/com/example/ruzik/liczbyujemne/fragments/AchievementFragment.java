@@ -56,17 +56,18 @@ public class AchievementFragment extends Fragment implements AdapterView.OnItemL
             AlertDialog show = new AlertDialog.Builder(getContext())
                     .setTitle("Warning")
                     .setMessage("Do you want reset achievement?")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String toDelete = achievement.getId() + ",";
                             String toSave = PreferenceManager.getDefaultSharedPreferences(MainActivity.CONTEXT).getString(MainActivity.ACHIEVEMENT_TAG, "");
                             toSave = toSave.replace(toDelete, "");
                             PreferenceManager.getDefaultSharedPreferences(MainActivity.CONTEXT).edit().putString(MainActivity.ACHIEVEMENT_TAG, toSave).commit();
+                            achievement.setLocked(true);
                             achievementAdapter.notifyDataSetChanged();
                         }
                     })
-                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                         }
